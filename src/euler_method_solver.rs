@@ -1,5 +1,3 @@
-/// ODE logic: right-hand side, analytic solution, Euler method, and step size
-
 /// The right-hand side of the ODE: y' = cos(t) - y
 pub fn f(t: f64, y: f64) -> f64 {
     t.cos() - y

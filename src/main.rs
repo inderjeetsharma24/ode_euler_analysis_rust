@@ -9,8 +9,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let t_end = 5.0;
 
     // Compute solutions for different step counts
-    let (t_20, y_euler_20, y_analytic_20) = ode::euler_vs_analytic(t0, y0, t_end, 20);
-    let (t_1000, y_euler_1000, y_analytic_1000) = ode::euler_vs_analytic(t0, y0, t_end, 1000);
+    let (t_20, y_euler_20, y_analytic_20) = euler_method_solver::euler_vs_analytic(t0, y0, t_end, 20);
+    let (t_1000, y_euler_1000, y_analytic_1000) = euler_method_solver::euler_vs_analytic(t0, y0, t_end, 1000);
 
     // Plot analytic, Euler n=20, and Euler n=1000 solutions
     plot_utils::plot_solutions(
@@ -36,7 +36,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Write CSVs using the modularized csv_utils
     csv_utils::write_solutions_csv(&t_1000, &y_analytic_1000, &t_20, &y_euler_20, &y_euler_1000, "solutions.csv")?;
-    csv_utils::write_errors_csv(&t_1000, &y_analytic_1000, &t_20, &y_euler_20, &y_euler_1000, &ode::y_analytic, "errors.csv")?;
+    csv_utils::write_errors_csv(&t_1000, &y_analytic_1000, &t_20, &y_euler_20, &y_euler_1000, &euler_method_solver::y_analytic, "errors.csv")?;
 
     Ok(())
 }
