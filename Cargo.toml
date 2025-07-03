@@ -1,7 +1,9 @@
 [package]
 name = "ode_euler_analysis"
 version = "0.1.0"
+edition = "2024"
 description = "A tool for solving ODEs using Euler's method."
+
 [dependencies]
 plotters = "0.3"
 csv = "1.3"
