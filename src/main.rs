@@ -8,9 +8,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let y0 = 1.0;
     let t_end = 5.0;
 
-    // Compute solutions for different step counts
-    let (t_20, y_euler_20, y_analytic_20) = euler_method_solver::euler_vs_analytic(t0, y0, t_end, 20);
-    let (t_1000, y_euler_1000, y_analytic_1000) = euler_method_solver::euler_vs_analytic(t0, y0, t_end, 1000);
+    
+    // --- 20 steps ---
+    let (t_20, y_euler_20) = euler_method_solver::euler_solve(t0, y0, t_end, 20);
+    let (_, y_analytic_20) = euler_method_solver::analytic_solve(t0, t_end, 20);
+
+    
+    // --- 1000 steps ---
+    let (t_1000, y_euler_1000) = euler_method_solver::euler_solve(t0, y0, t_end, 1000);
+    let (_, y_analytic_1000) = euler_method_solver::analytic_solve(t0, t_end, 1000);
 
     // Plot analytic, Euler n=20, and Euler n=1000 solutions
     plot_utils::plot_solutions(
