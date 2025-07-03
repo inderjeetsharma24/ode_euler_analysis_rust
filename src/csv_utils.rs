@@ -1,7 +1,6 @@
-//! Utility functions for exporting ODE solutions and errors to CSV files.
-//!
-//! This module provides functions to write the analytic and Euler method results, as well as their errors,
-//! to CSV files for further analysis or plotting in external tools.
+//! CSV export utilities for ODE solutions and errors.
+//! 
+//! Provides functions to write analytic and Euler results, and their errors, to CSV files.
 
 use std::error::Error;
 
