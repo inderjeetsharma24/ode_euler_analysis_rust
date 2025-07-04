@@ -1,21 +1,8 @@
-//! CSV export utilities for ODE solutions and errors.
-//! 
 //! Provides functions to write analytic and Euler results, and their errors, to CSV files.
 
 use std::error::Error;
 
-/// Writes the analytic solution, Euler n=20, and Euler n=1000 results to a CSV file in wide format.
-///
-/// # Arguments
-/// * `t_1000` - Time points for the analytic and Euler n=1000 solutions (fine grid)
-/// * `y_analytic_1000` - Analytic solution values at `t_1000`
-/// * `t_20` - Time points for Euler n=20
-/// * `y_euler_20` - Euler method values for n=20
-/// * `y_euler_1000` - Euler method values for n=1000
-/// * `filename` - Output CSV file name
-///
-/// # Output
-/// Writes a CSV file with columns: t, analytic, euler_n20, euler_n1000
+/// Write analytic and Euler solutions to a CSV file.
 pub fn write_solutions_csv(
     t_1000: &[f64],
     y_analytic_1000: &[f64],
@@ -24,12 +11,16 @@ pub fn write_solutions_csv(
     y_euler_1000: &[f64],
     filename: &str,
 ) -> Result<(), Box<dyn Error>> {
+    // Create CSV writer
     let mut wtr = csv::Writer::from_path(filename)?;
+    // Write header row
     wtr.write_record(["t", "analytic", "euler_n20", "euler_n1000"])?;
     let mut idx_20 = 0;
+    // Write each row of data
     for (i, &t) in t_1000.iter().enumerate() {
         let analytic = y_analytic_1000[i];
         let euler_1000 = y_euler_1000[i];
+        // Find matching Euler n=20 value if t matches
         let euler_20 = if idx_20 < t_20.len() && (t - t_20[idx_20]).abs() < 1e-8 {
             let val = y_euler_20[idx_20];
             idx_20 += 1;
@@ -44,23 +35,12 @@ pub fn write_solutions_csv(
             euler_1000.to_string(),
         ])?;
     }
+    // Flush and finish
     wtr.flush()?;
     Ok(())
 }
 
-/// Writes the errors (Euler - analytic) for n=20 and n=1000 to a CSV file in wide format.
-///
-/// # Arguments
-/// * `t_1000` - Time points for the analytic and Euler n=1000 solutions (fine grid)
-/// * `y_analytic_1000` - Analytic solution values at `t_1000`
-/// * `t_20` - Time points for Euler n=20
-/// * `y_euler_20` - Euler method values for n=20
-/// * `y_euler_1000` - Euler method values for n=1000
-/// * `analytic_fn` - Function to compute the analytic solution at a given t (for n=20 error)
-/// * `filename` - Output CSV file name
-///
-/// # Output
-/// Writes a CSV file with columns: t, error_n20, error_n1000
+/// Write Euler method errors to a CSV file.
 pub fn write_errors_csv(
     t_1000: &[f64],
     y_analytic_1000: &[f64],
@@ -70,12 +50,16 @@ pub fn write_errors_csv(
     analytic_fn: &dyn Fn(f64) -> f64,
     filename: &str,
 ) -> Result<(), Box<dyn Error>> {
+    // Create CSV writer
     let mut wtr = csv::Writer::from_path(filename)?;
+    // Write header row
     wtr.write_record(["t", "error_n20", "error_n1000"])?;
     let mut idx_20 = 0;
+    // Write each row of error data
     for (i, &t) in t_1000.iter().enumerate() {
         let analytic = y_analytic_1000[i];
         let error_1000 = y_euler_1000[i] - analytic;
+        // Find matching error for Euler n=20 if t matches
         let error_20 = if idx_20 < t_20.len() && (t - t_20[idx_20]).abs() < 1e-8 {
             let val = y_euler_20[idx_20] - analytic_fn(t_20[idx_20]);
             idx_20 += 1;
@@ -89,6 +73,7 @@ pub fn write_errors_csv(
             error_1000.to_string(),
         ])?;
     }
+    // Flush and finish
     wtr.flush()?;
     Ok(())
 } 
