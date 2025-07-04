@@ -33,22 +33,35 @@ pub fn plot_solutions(
     // Draw axes and grid
     chart.configure_mesh().draw()?;
     // Plot analytic solution (blue)
-    chart.draw_series(LineSeries::new(
-        t_analytic.iter().cloned().zip(y_analytic.iter().cloned()),
-        &RGBColor(0, 0, 255),
-    ))?.label("Analytic").legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(0, 0, 255)));
+    chart
+        .draw_series(LineSeries::new(
+            t_analytic.iter().cloned().zip(y_analytic.iter().cloned()),
+            &RGBColor(0, 0, 255),
+        ))?
+        .label("Analytic")
+        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(0, 0, 255)));
     // Plot Euler n=20 (red)
-    chart.draw_series(LineSeries::new(
-        t_20.iter().cloned().zip(y_20.iter().cloned()),
-        &RGBColor(220, 20, 60),
-    ))?.label("Euler n=20").legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(220, 20, 60)));
+    chart
+        .draw_series(LineSeries::new(
+            t_20.iter().cloned().zip(y_20.iter().cloned()),
+            &RGBColor(220, 20, 60),
+        ))?
+        .label("Euler n=20")
+        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(220, 20, 60)));
     // Plot Euler n=1000 (green)
-    chart.draw_series(LineSeries::new(
-        t_1000.iter().cloned().zip(y_1000.iter().cloned()),
-        &RGBColor(34, 139, 34),
-    ))?.label("Euler n=1000").legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(34, 139, 34)));
+    chart
+        .draw_series(LineSeries::new(
+            t_1000.iter().cloned().zip(y_1000.iter().cloned()),
+            &RGBColor(34, 139, 34),
+        ))?
+        .label("Euler n=1000")
+        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(34, 139, 34)));
     // Draw legend
-    chart.configure_series_labels().background_style(&WHITE.mix(0.8)).border_style(&BLACK).draw()?;
+    chart
+        .configure_series_labels()
+        .background_style(&WHITE.mix(0.8))
+        .border_style(&BLACK)
+        .draw()?;
     // Success
     Ok(())
 }
@@ -68,8 +81,16 @@ pub fn plot_errors(
     // Fill background with white
     root.fill(&WHITE)?;
     // Compute errors for n=20 and n=1000
-    let errors_20: Vec<f64> = y_20.iter().zip(y_analytic_20).map(|(y, ya)| y - ya).collect();
-    let errors_1000: Vec<f64> = y_1000.iter().zip(y_analytic_1000).map(|(y, ya)| y - ya).collect();
+    let errors_20: Vec<f64> = y_20
+        .iter()
+        .zip(y_analytic_20)
+        .map(|(y, ya)| y - ya)
+        .collect();
+    let errors_1000: Vec<f64> = y_1000
+        .iter()
+        .zip(y_analytic_1000)
+        .map(|(y, ya)| y - ya)
+        .collect();
     // Set up chart with title, margin, label areas, and axis ranges
     let mut chart = ChartBuilder::on(&root)
         .caption("Euler Method Errors", ("sans-serif", 30))
@@ -80,17 +101,27 @@ pub fn plot_errors(
     // Draw axes and grid
     chart.configure_mesh().draw()?;
     // Plot error for n=20 (red)
-    chart.draw_series(LineSeries::new(
-        t_20.iter().cloned().zip(errors_20),
-        &RGBColor(220, 20, 60),
-    ))?.label("Error n=20").legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(220, 20, 60)));
+    chart
+        .draw_series(LineSeries::new(
+            t_20.iter().cloned().zip(errors_20),
+            &RGBColor(220, 20, 60),
+        ))?
+        .label("Error n=20")
+        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(220, 20, 60)));
     // Plot error for n=1000 (green)
-    chart.draw_series(LineSeries::new(
-        t_1000.iter().cloned().zip(errors_1000),
-        &RGBColor(34, 139, 34),
-    ))?.label("Error n=1000").legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(34, 139, 34)));
+    chart
+        .draw_series(LineSeries::new(
+            t_1000.iter().cloned().zip(errors_1000),
+            &RGBColor(34, 139, 34),
+        ))?
+        .label("Error n=1000")
+        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RGBColor(34, 139, 34)));
     // Draw legend
-    chart.configure_series_labels().background_style(&WHITE.mix(0.8)).border_style(&BLACK).draw()?;
+    chart
+        .configure_series_labels()
+        .background_style(&WHITE.mix(0.8))
+        .border_style(&BLACK)
+        .draw()?;
     // Success
     Ok(())
 }

@@ -4,7 +4,7 @@ use std::error::Error;
 
 /// Write results for n=20 to a CSV file (t, analytic, euler_n20)
 pub fn write_n20_csv(
-t_20: &[f64],
+    t_20: &[f64],
     y_analytic_20: &[f64],
     y_euler_20: &[f64],
     filename: &str,
@@ -40,4 +40,4 @@ pub fn write_n1000_csv(
     }
     wtr.flush()?;
     Ok(())
-} 
+}
