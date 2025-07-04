@@ -6,7 +6,7 @@ This project demonstrates solving an ordinary differential equation (ODE) using 
 - Solves a simple ODE using the Euler method for different step sizes (n=20 and n=1000)
 - Computes the analytic (exact) solution for comparison
 - Plots both the solutions and the errors using the `plotters` crate
-- Exports results and errors to CSV files
+- Exports results to separate CSV files for each step size
 
 ## Requirements
 - Rust (latest stable version recommended)
@@ -29,10 +29,10 @@ This project demonstrates solving an ordinary differential equation (ODE) using 
    ```
 
 ## Outputs
-- `solutions.png`: Plot comparing analytic and Euler solutions
+- `results_n20.csv`: CSV file with time, analytic solution, and Euler n=20 results (coarse grid)
+- `results_n1000.csv`: CSV file with time, analytic solution, and Euler n=1000 results (fine grid)
+- `solutions.png`: Plot comparing analytic and Euler solutions for both step sizes
 - `errors.png`: Plot showing the error (Euler - analytic) for both step sizes
-- `solutions.csv`: CSV file with time, analytic solution, and Euler results
-- `errors.csv`: CSV file with time and errors for both step sizes
 
 ## File Structure
 - `src/main.rs`: Main program logic

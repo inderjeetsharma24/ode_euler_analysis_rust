@@ -40,20 +40,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 
     // -------------------------------------- CSV Writing Section -----------------------------
-    // Write the solutions (analytic and Euler) to a CSV file
-    csv_utils::write_solutions_csv(
-        &t_1000, &y_analytic_1000,
-        &t_20,   &y_euler_20,
-        &y_euler_1000,
-        "solutions.csv",
+    // Write the n=20 results to a CSV file
+    csv_utils::write_n20_csv(
+        &t_20, &y_analytic_20, &y_euler_20, "results_n20.csv",
     )?;
-    // Write the errors (Euler - analytic) to a CSV file
-    csv_utils::write_errors_csv(
-        &t_1000, &y_analytic_1000,
-        &t_20,   &y_euler_20,
-        &y_euler_1000,
-        &euler_method_solver::y_analytic,
-        "errors.csv",
+    // Write the n=1000 results to a CSV file
+    csv_utils::write_n1000_csv(
+        &t_1000, &y_analytic_1000, &y_euler_1000, "results_n1000.csv",
     )?;
 
     Ok(())
